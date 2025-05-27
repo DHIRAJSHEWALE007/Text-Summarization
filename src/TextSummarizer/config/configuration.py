@@ -1,7 +1,6 @@
 from TextSummarizer.constants import *
 from TextSummarizer.utils.common import read_yaml, create_directories
 from TextSummarizer.entity import (DataIngestionConfig, DataValidationConfig,DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig)
-from pathlib import Path
 
 
 class ConfigurationManager:
@@ -48,7 +47,7 @@ class ConfigurationManager:
 
         data_transformation_config = DataTransformationConfig(
             root_dir=config.root_dir,
-            data_path=str(Path(config.data_path).resolve()),
+            data_path=config.data_path,
             tokenizer_name=config.tokenizer_name
             )
         
@@ -61,7 +60,7 @@ class ConfigurationManager:
 
         data_model_trainer_config = ModelTrainerConfig(
             root_dir=config.root_dir,
-            data_path=str(Path(config.data_path).resolve()),
+            data_path=config.data_path,
             model_ckpt=config.model_ckpt,
             num_train_epochs=params.num_train_epochs,
             warmup_steps=params.warmup_steps,
@@ -83,7 +82,7 @@ class ConfigurationManager:
 
         data_model_evaluation_config = ModelEvaluationConfig(
             root_dir=config.root_dir,
-            data_path=str(Path(config.data_path).resolve()),
+            data_path=config.data_path,
             model_path=config.model_path,
             tokenizer_path=config.tokenizer_path,
             metric_file_name=config.metric_file_name
