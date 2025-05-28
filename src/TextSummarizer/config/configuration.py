@@ -58,7 +58,7 @@ class ConfigurationManager:
         params = self.params.TrainingArguments
         create_directories([config.root_dir])
 
-        data_model_trainer_config = ModelTrainerConfig(
+        model_trainer_config = ModelTrainerConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
             model_ckpt=config.model_ckpt,
@@ -74,13 +74,13 @@ class ConfigurationManager:
             gradient_accumulation_steps=params.gradient_accumulation_steps
             )
         
-        return data_model_trainer_config
+        return model_trainer_config
     
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:
         config = self.config.model_evaluation
         create_directories([config.root_dir])
 
-        data_model_evaluation_config = ModelEvaluationConfig(
+        model_evaluation_config = ModelEvaluationConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
             model_path=config.model_path,
@@ -88,4 +88,4 @@ class ConfigurationManager:
             metric_file_name=config.metric_file_name
             )
         
-        return data_model_evaluation_config
+        return model_evaluation_config
