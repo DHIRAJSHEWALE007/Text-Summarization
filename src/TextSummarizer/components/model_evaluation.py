@@ -17,9 +17,9 @@ class ModelEvaluation:
 
     def calculate_metric_on_test_ds(self, dataset, metric, model, tokenizer,
                                     batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu',
-                                    column_text='article', column_summary='highlights'):
-        article_batches = list(self.generate_batch_sized_chunks(dataset[column_text], batch_size))
-        target_batches = list(self.generate_batch_sized_chunks(dataset[column_summary], batch_size))
+                                    column_text='dialogue', column_summary='summary'):
+        article_batches = list(self.generate_batch_sized_chunks(dataset['test'][column_text], batch_size))
+        target_batches = list(self.generate_batch_sized_chunks(dataset['test'][column_summary], batch_size))
 
         for article_batch, target_batch in tqdm(zip(article_batches, target_batches), total=len(article_batches)):
 
@@ -50,7 +50,7 @@ class ModelEvaluation:
 
         rouge_metric = evaluate.load('rouge')
 
-        score = self.calculate_metric_on_test_ds(dataset_samsum_pt, rouge_metric, model_pegasus, tokenizer, batch_size=2, column_text='article', column_summary='highlights')
+        score = self.calculate_metric_on_test_ds(dataset_samsum_pt, rouge_metric, model_pegasus, tokenizer, batch_size=2, column_text='dialogue', column_summary='summary')
 
         rouge_dict = dict((rn, score[rn].mid.fmeasure) for rn in rouge_names)
 
